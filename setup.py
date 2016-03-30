@@ -39,16 +39,14 @@ class MyMagics(Magics):
                 print "There was a problem with one of your inputs."
         
         except:
-            print "there was a problem"
+            print "Christian made a mistake."
 
-def commit(char):
-    subprocess.call(["cd /home/main/", 
-                     "git clone https://github.com/cferko/eldritch-signup.git",
-                     "cd eldritch-signup",
-                     'git config --global user.email "ferko7@hotmail.com"',
-                     'git config --global user.name   "jttalks"',
-                     'git pull'], shell=True)
-    my_indices = [int(f) for f in os.listdir('~/main/')]
+def commit():
+    subprocess.call(["""cd /home/main/notebooks/records;
+                     git config --global user.email "ferko7@hotmail.com";
+                     git config --global user.name   "jttalks";
+                     git pull"""], shell=True)
+    my_indices = [int(f) for f in os.listdir('/home/main/notebooks/records')]
     new_index = str(max(my_indices)+1)
     
     timestamp = datetime.now().ctime()
