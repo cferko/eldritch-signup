@@ -31,7 +31,7 @@ class MyMagics(Magics):
                 me.race != None and
                 me.house != None):
                 
-                commit(me)
+                commit()
                 
                 print "Checkpoint complete. You have been signed up for Eldritch."
                 
@@ -42,11 +42,12 @@ class MyMagics(Magics):
             print "Christian made a mistake."
 
 def commit():
-    subprocess.call(["""cd /home/main/notebooks/records;
+    subprocess.call("""cd /home/main/notebooks/records;
                      git config --global user.email "ferko7@hotmail.com";
-                     git config --global user.name   "jttalks";
-                     git pull"""], shell=True)
-    my_indices = [int(f) for f in os.listdir('/home/main/notebooks/records')]
+                     git config --global user.name "jttalks";
+                     git pull""", shell=True)
+    
+    my_indices = [int(f) for f in os.listdir('/home/main/notebooks/records/') if '.' not in f]
     new_index = str(max(my_indices)+1)
     
     timestamp = datetime.now().ctime()
@@ -58,12 +59,12 @@ def commit():
                          me.house,
                          timestamp])
     
-    my_data.to_csv("/home/main/eldritch-signup/records/"+new_index,
+    my_data.to_csv("/home/main/notebooks/records/"+new_index,
                    index=False)
                    
-    subprocess.call(["cd /home/main/eldritch-signup/records/",
-                     "git add "+new_index,
-                     'git commit -m "ADD: signup #'+new_index+'"'], shell=True)
+    subprocess.call("""cd /home/main/eldritch-signup/records/;
+                      git add *;
+                      git commit -m "ADD: signup" """, shell=True)
                      
     pexpect.run('git push -u origin master', 
                 cwd='/home/main/notebooks/records',
