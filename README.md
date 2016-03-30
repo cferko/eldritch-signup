@@ -1,0 +1,1 @@
+This is the student-facing signup repo for the Eldritch edularp.
