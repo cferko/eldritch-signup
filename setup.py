@@ -4,6 +4,7 @@ from IPython.core.magic import (Magics, magics_class, line_magic,
 import os         
 from datetime import datetime
 import pandas as pd
+import pexpect
 
 class Character():
     def __init__(self):
@@ -44,7 +45,6 @@ def commit(char):
     subprocess.call(["cd /home/main/", 
                      "git clone https://github.com/cferko/eldritch-signup.git",
                      "cd eldritch-signup",
-                     "mkdir records",
                      'git config --global user.email "ferko7@hotmail.com"',
                      'git config --global user.name   "jttalks"',
                      'git pull'], shell=True)
@@ -65,11 +65,11 @@ def commit(char):
                    
     subprocess.call(["cd /home/main/eldritch-signup/records/",
                      "git add "+new_index,
-                     'git commit -m "ADD: signup #'+new_index+'"',
-                     'git push -u origin master',
-                     'jttalks',
-                     'jttalks1'], shell=True)
-    
+                     'git commit -m "ADD: signup #'+new_index+'"'], shell=True)
+                     
+    pexpect.run('git push -u origin master', 
+                cwd='/home/main/notebooks/records',
+               events={'Username*':'jttalks\n', 'Password*':'jttalks1\n'})    
 
 if __name__ == "__main__":
     ip = get_ipython()
