@@ -62,7 +62,7 @@ def commit():
     my_data.to_csv("/home/main/notebooks/records/"+new_index,
                    index=False)
                    
-    subprocess.call("""cd /home/main/eldritch-signup/records/;
+    subprocess.call("""cd /home/main/notebooks/records;
                       git add *;
                       git commit -m "ADD: signup" """, shell=True)
                      
